@@ -2,3 +2,6 @@ rootProject.name = 'demo-project'
 include('kafka')
 
 project(':kafka').projectDir = file('jms/kafka')
+include 'jms:rabbitmq'
+findProject(':jms:rabbitmq')?.name = 'rabbitmq'
+
