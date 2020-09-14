@@ -1,7 +1,9 @@
 rootProject.name = 'demo-project'
-include('kafka')
+include('kafka', 'rocketmq')
 
 project(':kafka').projectDir = file('jms/kafka')
+project(':rocketmq').projectDir = file('jms/rocketmq')
+
+/*下面这是第二种嵌套目录多模块项目的写法*/
 include 'jms:rabbitmq'
 findProject(':jms:rabbitmq')?.name = 'rabbitmq'
-
