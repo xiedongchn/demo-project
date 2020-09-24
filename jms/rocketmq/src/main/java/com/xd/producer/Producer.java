@@ -96,6 +96,23 @@ public class Producer {
         defaultMQProducer.sendOneway(msg);
     }
 
+    /**
+     * 发送一条具备指定tag或属性的消息
+     */
+    public static void sendByTagAndProp() throws UnsupportedEncodingException, RemotingException, MQClientException, InterruptedException {
+        // 构建一个消息对象
+        // Message()构造方法参数解析
+        //  topic：指定消息的topic
+        //  消息的tag
+        //  消息的字节数组
+
+        Message msg = new Message("Test_Topic", "TagA", "testMsg".getBytes(RemotingHelper.DEFAULT_CHARSET));
+        msg.putUserProperty("a", "10");
+        msg.putUserProperty("b", "11");
+        // 使用Producer发送消息
+        defaultMQProducer.sendOneway(msg);
+    }
+
     public static void main(String[] args) throws MQClientException, InterruptedException {
         final DefaultMQProducer producer = new DefaultMQProducer("test_producer");
         producer.setNamesrvAddr("localhost:9876");

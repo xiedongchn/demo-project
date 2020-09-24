@@ -2,6 +2,7 @@ package com.xd.consumer;
 
 import org.apache.rocketmq.client.consumer.DefaultMQPullConsumer;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
+import org.apache.rocketmq.client.consumer.MessageSelector;
 import org.apache.rocketmq.client.consumer.PullResult;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
@@ -74,6 +75,17 @@ public class Consumer {
                 }
             }
         }
+    }
+
+    /**
+     * 消费指定tag或属性的消息
+     */
+    public static void consumeByTagAndProp() throws MQClientException {
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("consumer_group");
+        // 消费指定Tag的消息,多个tag用||分隔
+        consumer.subscribe("Test_Topic", "TagA || TagB");
+        // 通过消息选择器过滤消息,功能比tag更强大也更复杂,支持类sql查询
+        consumer.subscribe("Test_Topic", MessageSelector.bySql("a > 5 and b='abd'"));
     }
 
     public static void main(String[] args) throws MQClientException {
